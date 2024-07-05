@@ -1,8 +1,7 @@
-from django.db import models
-
 from apps.account.models import User
 from apps.catalog.models import Catalog
-from apps.core.models import TimeStampedModel, AuditModel
+from apps.core.models import AuditModel, TimeStampedModel
+from django.db import models
 
 
 class ProductCategory(TimeStampedModel, AuditModel):
@@ -16,7 +15,9 @@ class Product(TimeStampedModel, AuditModel):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available_item_count = models.IntegerField()
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
-    catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE, related_name='products')
+    catalog = models.ForeignKey(
+        Catalog, on_delete=models.CASCADE, related_name="products"
+    )
 
 
 class ProductReview(TimeStampedModel, AuditModel):

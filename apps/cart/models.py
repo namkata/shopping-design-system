@@ -1,13 +1,12 @@
-from django.db import models
-
 from apps.account.models import User
-from apps.core.models import TimeStampedModel, AuditModel
+from apps.core.models import AuditModel, TimeStampedModel
 from apps.product.models import Product
+from django.db import models
 
 
 class ShoppingCart(TimeStampedModel, AuditModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    items = models.ManyToManyField(Product, through='CartItem')
+    items = models.ManyToManyField(Product, through="CartItem")
 
 
 class CartItem(TimeStampedModel, AuditModel):

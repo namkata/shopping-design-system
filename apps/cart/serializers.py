@@ -1,20 +1,19 @@
 from rest_framework import serializers
-from .models import ShoppingCart, CartItem
+
+from .models import CartItem, ShoppingCart
 
 
 class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CartItem
-        fields = '__all__'
+        fields = "__all__"
 
 
 class ShoppingCartSerializer(serializers.ModelSerializer):
     items = CartItemSerializer(
-        many=True,
-        read_only=True,
-        source='cartitem_set' # noqa
+        many=True, read_only=True, source="cartitem_set"  # noqa
     )
 
     class Meta:
         model = ShoppingCart
-        fields = '__all__'
+        fields = "__all__"

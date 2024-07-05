@@ -1,6 +1,5 @@
+from apps.core.models import AuditModel, TimeStampedModel
 from django.db import models
-
-from apps.core.models import TimeStampedModel, AuditModel
 
 
 class Catalog(TimeStampedModel, AuditModel):

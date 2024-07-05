@@ -1,0 +1,96 @@
+default_language_version:
+  python: python3.8
+
+repos:
+  - repo: https://github.com/asottile/seed-isort-config
+    rev: v2.2.0
+    hooks:
+      - id: seed-isort-config
+        args: [ --application-directories=api, --exclude=migrations ]
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        name: isort (python)
+        exclude: "[a-zA-Z]*/(migrations)/(.)*"
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.16.0
+    hooks:
+      - id: pyupgrade
+        args: [ "--py36-plus", "--py37-plus", "--py38-plus" ]
+
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+        exclude: "[a-zA-Z]*/(migrations)/(.)*"
+        args: [ --skip-string-normalization ]
+
+  - repo: https://github.com/pycqa/bandit
+    rev: 1.7.9
+    hooks:
+      - id: bandit
+        args: [ "-iii", "-ll" ]
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: "7.1.0"
+    hooks:
+      - id: flake8
+        additional_dependencies: [
+          "flake8-bugbear",
+          "flake8-comprehensions",
+          "flake8-mutable",
+          "flake8-simplify",
+        ]
+        exclude: "^.*[\\/](migrations)[\\/].*$"
+        args:
+          [
+            --max-line-length=80,
+            --max-complexity=18,
+            --select=B,C,E,F,W,T4,B9,
+            --ignore=E266,E501,W503,F403
+          ]
+
+  - repo: https://github.com/Riverside-Healthcare/djLint
+    rev: v1.34.1
+    hooks:
+      - id: djlint-django
+
+  - repo: https://github.com/python-poetry/poetry
+    rev: '1.8.0'
+    hooks:
+      - id: poetry-export
+        args: [
+          "-f", "requirements.txt",
+          "-o", "requirements.txt",
+          "--without-hashes"
+        ]
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.5.0
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix, --line-length=100]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-ast
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: trailing-whitespace
+        exclude: "[a-zA-Z]*/(migrations)/(.)*"
+
+  - repo: https://github.com/ecugol/pre-commit-hooks-django
+    rev: v0.4.0
+    hooks:
+      - id: check-untracked-migrations
+      - id: check-absent-migrations
+      - id: check-unapplied-migrations
+      - id: po-location-format
+        args: [ "--add-location", "file" ]

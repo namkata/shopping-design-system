@@ -1,24 +1,27 @@
-from django.db import models
-
 from apps.account.models import Address
-from apps.core.models import TimeStampedModel, AuditModel
+from apps.core.models import AuditModel, TimeStampedModel
+from django.db import models
 
 
 class PaymentStatus(models.TextChoices):
-    UNPAID = 'Unpaid'
-    PENDING = 'Pending'
-    COMPLETED = 'Completed'
-    FAILED = 'Failed'
-    DECLINED = 'Declined'
-    CANCELED = 'Canceled'
-    ABANDONED = 'Abandoned'
-    SETTLING = 'Settling'
-    SETTLED = 'Settled'
-    REFUNDED = 'Refunded'
+    UNPAID = "Unpaid"
+    PENDING = "Pending"
+    COMPLETED = "Completed"
+    FAILED = "Failed"
+    DECLINED = "Declined"
+    CANCELED = "Canceled"
+    ABANDONED = "Abandoned"
+    SETTLING = "Settling"
+    SETTLED = "Settled"
+    REFUNDED = "Refunded"
 
 
 class Payment(TimeStampedModel, AuditModel):
-    status = models.CharField(max_length=20, choices=PaymentStatus.choices, default=PaymentStatus.UNPAID)
+    status = models.CharField(
+        max_length=20,
+        choices=PaymentStatus.choices,
+        default=PaymentStatus.UNPAID,
+    )
     amount = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
