@@ -1,3 +1,7 @@
 [flake8]
+extend-ignore = E203
+#exclude = .git,__pycache__,docs/source/conf.py,old,build,dis
+ignore = E501,W503,F403,E241,E266
 max-line-length = 80
-ignore = E501,W503,F403
+max-complexity = 10
+exclude = ^.*\\/[\\/].*$
